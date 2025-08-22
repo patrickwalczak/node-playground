@@ -1,0 +1,127 @@
+### 📦 What is `package.json`?
+
+* A **JSON file** that lives at the root of your project.
+* Created with `npm init` or `npm init -y`.
+* It **describes your project** and keeps track of:
+
+  * Project metadata (name, version, description, author)
+  * Dependencies (libraries your project needs)
+  * Dev dependencies (tools for development only)
+  * Scripts (commands you can run with `npm run`)
+
+---
+
+### 📝 Example `package.json`
+
+```json
+{
+  "name": "node-playground",
+  "version": "1.0.0",
+  "description": "A repo to practice Node.js and backend development",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest"
+  },
+  "keywords": ["node", "backend", "playground"],
+  "author": "Patrick",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
+```
+
+---
+
+### 🔑 Key fields
+
+* **`name`** → project name.
+* **`version`** → version of your project.
+* **`description`** → short summary.
+* **`main`** → entry point file (e.g. `index.js` or `app.js`).
+* **`scripts`** → shortcuts you run with `npm run <script>`.
+* **`dependencies`** → packages needed in production.
+* **`devDependencies`** → packages only for development.
+* **`license`, `author`, `keywords`** → project info.
+
+---
+
+### ✅ Why it matters
+
+* Without `package.json`, npm doesn’t know what dependencies your project needs.
+* It makes your project **portable** → others can just `git clone` + `npm install`.
+* It defines **scripts** so you don’t type long commands.
+
+---
+
+👉 In short:
+`package.json` = the **manifest file** of a Node.js project that keeps track of dependencies, metadata, and scripts.
+
+
+
+### 📦 Dependencies vs Dev Dependencies
+
+#### 🔹 `dependencies`
+
+* These are packages your app **needs to run in production**.
+* Example: Express, Mongoose, dotenv.
+* Installed with:
+
+  ```bash
+  npm install express
+  ```
+* They appear in `package.json` like this:
+
+  ```json
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+  ```
+
+---
+
+#### 🔹 `devDependencies`
+
+* These are packages you **only need while developing** (not in production).
+* Example: testing libraries (Jest), linters (ESLint), nodemon, bundlers.
+* Installed with:
+
+  ```bash
+  npm install jest --save-dev
+  # or shorter:
+  npm i jest -D
+  ```
+* They appear in `package.json` like this:
+
+  ```json
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "jest": "^29.7.0"
+  }
+  ```
+
+---
+
+### ✅ Why the distinction matters
+
+* In production, you want a **lighter install** (only real deps, not dev tools).
+* Some hosting platforms (`npm ci --only=production`) skip `devDependencies` automatically.
+
+---
+
+### 📌 Quick examples
+
+* **dependencies**: Express (server framework), Prisma (ORM), bcrypt (hashing passwords).
+* **devDependencies**: Jest (tests), ESLint (linting), Nodemon (auto-restart in dev).
+
+---
+
+👉 In short:
+
+* `dependencies` → code needed when the app **runs**.
+* `devDependencies` → code needed only when you’re **developing/testing**.

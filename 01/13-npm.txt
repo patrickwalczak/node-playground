@@ -1,0 +1,96 @@
+## 📦 What is **npm**
+
+* **npm** = **Node Package Manager**.
+* It comes installed with Node.js.
+* It’s the tool you use to:
+
+  * **Install packages** (libraries, frameworks, tools) from the npm registry.
+  * **Manage dependencies** in your project (`package.json`).
+  * **Run scripts** defined in `package.json`.
+
+Think of it as the **app store for Node.js packages**.
+
+---
+
+## 🛠️ Common `npm` commands
+
+### 📌 Project setup
+
+* **`npm init`** → creates a new `package.json` file (asks questions).
+* **`npm init -y`** → quick init with defaults.
+
+---
+
+### 📌 Installing packages
+
+* **`npm install <package>`** or **`npm i <package>`**
+  → installs a package locally in `node_modules` and adds it to `dependencies`.
+
+  ```bash
+  npm i express
+  ```
+
+* **`npm install <package> --save-dev`** or **`npm i <package> -D`**
+  → installs a dev-only dependency (like testing tools, bundlers).
+
+  ```bash
+  npm i jest -D
+  ```
+
+* **`npm install`**
+  → installs all dependencies listed in `package.json`.
+
+---
+
+### 📌 Removing / updating
+
+* **`npm uninstall <package>`** → removes a package.
+* **`npm update <package>`** → updates a package to latest allowed version.
+
+---
+
+### 📌 Global installs
+
+* **`npm install -g <package>`**
+  → installs a tool globally, available from the command line.
+
+  ```bash
+  npm i -g nodemon
+  ```
+
+---
+
+### 📌 Running scripts
+
+* In `package.json`:
+
+  ```json
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest"
+  }
+  ```
+* Run with:
+
+  ```bash
+  npm run start
+  npm run dev
+  npm test
+  ```
+
+---
+
+### 📌 Useful info commands
+
+* **`npm list`** → show installed packages.
+* **`npm outdated`** → check which packages are outdated.
+* **`npm -v`** → check npm version.
+* **`node -v`** → check Node.js version.
+
+---
+
+✅ In short:
+
+* **npm** is the tool to manage Node.js packages.
+* You’ll use `npm init`, `npm install`, `npm run`, `npm uninstall`, and `npm update` the most.
