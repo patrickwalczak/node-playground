@@ -1,0 +1,94 @@
+### 📄 Your code
+
+```js
+const http = require('http')
+
+const server = http.createServer((req, res) => {
+  console.log('request event')
+  res.end('Hello World')
+})
+
+server.listen(5000, () => {
+  console.log('Server listening on port : 5000....')
+})
+```
+
+---
+
+### 🔎 Step-by-step with the event loop
+
+1. **Synchronous startup**
+
+   * `require('http')` loads the `http` module.
+   * `http.createServer(...)` creates a server object (an `EventEmitter`) and attaches your callback to its `"request"` event.
+   * `server.listen(5000, ...)` tells Node to start listening on port `5000`.
+
+     * Under the hood, Node asks the OS to open port 5000 for incoming connections.
+     * The callback (`() => console.log(...)`) is registered for the `"listening"` event.
+
+---
+
+2. **Event loop begins**
+
+   * At this point, Node’s call stack is empty.
+   * The event loop goes into its **poll phase**, waiting for events (like incoming network requests).
+
+---
+
+3. **`listening` event**
+
+   * When the server successfully binds to port 5000, Node emits a `"listening"` event.
+   * The event loop picks up this event, finds your callback, and runs:
+
+     ```
+     Server listening on port : 5000....
+     ```
+
+---
+
+4. **Incoming request**
+
+   * A client (e.g., browser or `curl`) makes an HTTP request to `http://localhost:5000/`.
+   * The OS notifies Node → libuv places a `"request"` event in the event loop’s queue.
+   * The event loop dequeues this and calls your registered callback `(req, res) => {...}`.
+
+---
+
+5. **Request handler runs**
+
+   * Inside the callback:
+
+     ```js
+     console.log('request event');
+     res.end('Hello World');
+     ```
+   * `console.log` runs immediately.
+   * `res.end('Hello World')` sends a response back to the client.
+
+---
+
+6. **Loop continues**
+
+   * After finishing, the call stack is empty again.
+   * The event loop returns to **poll** mode, waiting for more connections or other async work.
+
+---
+
+### ✅ In short
+
+* On startup → synchronous setup.
+* Event loop goes idle (polling).
+* `"listening"` event fires → logs the server message.
+* Each new request fires a `"request"` event → runs your callback → sends a response.
+* The event loop keeps running as long as the server is open.
+
+---
+
+👉 So this tiny server is a **perfect demo of the event loop**:
+
+* Setup runs once synchronously.
+* The server then lives in the event loop, responding to `"request"` events forever.
+
+---
+
+Do you want me to also draw a **visual timeline of this event loop flow** (startup → listening → request → poll → repeat) so it’s easier to picture?
