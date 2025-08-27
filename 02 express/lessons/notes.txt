@@ -1,0 +1,53 @@
+When you’re running a React app with Vite in dev mode (npm run dev), all files are served by the Vite dev server, not Express.
+
+🔹 How Vite dev server works in dev mode
+
+Vite doesn’t “bundle everything upfront” like Webpack.
+
+Instead, it:
+
+  Serves your index.html as the entry point.
+
+  Uses native ES modules in the browser → when the browser requests /src/App.jsx, Vite transforms it (adds JSX → JS, TypeScript → JS, etc.) and sends it back.
+
+  Serves CSS, images, assets directly.
+
+  Provides Hot Module Replacement (HMR), so changes reload instantly without full page reload.
+
+👉 So in dev:
+
+http://localhost:5173/ → Vite sends index.html.
+
+http://localhost:5173/src/App.jsx → Vite transforms and serves your React component.
+
+http://localhost:5173/src/style.css → served as CSS.
+
+Express is not involved at all here — only the Vite server.
+
+
+🔹 What happens in prod mode
+
+When you run:
+
+npm run build
+
+
+Vite builds everything into a /dist folder:
+
+dist/
+ ├── index.html
+ ├── assets/
+ │    ├── index-abc123.js
+ │    ├── index-def456.css
+
+
+These are static files (optimized JS, CSS, HTML).
+
+Then Express, Nginx, Netlify, or Vercel serves those files.
+
+👉 So in prod:
+
+Express (or another server) is responsible for serving React’s static output.
+
+Dev: Vite dev server serves everything (files are transformed on-demand, not pre-built).
+Prod: Vite builds to /dist, then Express or another server serves those files.
