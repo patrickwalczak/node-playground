@@ -13,8 +13,12 @@ yargs(hideBin(process.argv))
     });
   },
   async argv => {
-    await fs.mkdir('./notes', { recursive: true });
-    await fs.writeFile('./notes/note.txt', argv.note);
+    try {
+      await fs.mkdir('./notes', { recursive: true });
+      await fs.writeFile('./notes/note.txt', argv.note);
+    } catch (error) {
+      console.log(error);
+    }
   }
 )
   .option('tags', {
